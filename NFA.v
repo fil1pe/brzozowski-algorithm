@@ -10,7 +10,7 @@ Hypothesis Symbol_eq_dec : forall (x1 x2:Symbol), { x1 = x2 } + { x1 <> x2 }.
 
 Inductive NFA_comp :=
   | state (q:State)
-  | symbol (q:Symbol)
+  | symbol (a:Symbol)
   | start (q:State)
   | accept (q:State)
   | transition (q1:State) (a:Symbol) (q2:State).
@@ -94,9 +94,9 @@ Proof.
       2: destruct H.
       3: destruct H.
       1-3: intuition.
-      destruct H as [[a [q' H]]|[a [q' H]]].
-      right; right; right; left; exists a, q'; intuition.
-      repeat right; exists a, q'; intuition.
+      destruct H as [[b [q' H]]|[b [q' H]]].
+      right; right; right; left; exists b, q'; intuition.
+      repeat right; exists b, q'; intuition.
     - apply IH.
       destruct H as [[H|H]|H]; try discriminate.
       intuition.
@@ -104,10 +104,10 @@ Proof.
       intuition.
       destruct H as [[H|H]|H]; try discriminate.
       intuition.
-      destruct H as [[a [q' [H|H]]]|H]; try discriminate.
-      right; right; right; left; exists a, q'; intuition.
-      destruct H as [a [q' [H|H]]]; try discriminate.
-      repeat right; exists a, q'; intuition.
+      destruct H as [[b [q' [H|H]]]|H]; try discriminate.
+      right; right; right; left; exists b, q'; intuition.
+      destruct H as [b [q' [H|H]]]; try discriminate.
+      repeat right; exists b, q'; intuition.
   }
   - split; intro H.
     + destruct H.
@@ -117,9 +117,9 @@ Proof.
       2: destruct H.
       3: destruct H.
       1-3: intuition.
-      destruct H as [[a [q' H]]|[a [q' H]]].
-      right; right; right; left; exists a, q'; intuition.
-      right; right; right; right; exists a, q'; intuition.
+      destruct H as [[b [q' H]]|[b [q' H]]].
+      right; right; right; left; exists b, q'; intuition.
+      right; right; right; right; exists b, q'; intuition.
     + destruct H.
       destruct H.
       injection H; intros; subst; intuition.
@@ -130,10 +130,10 @@ Proof.
       destruct H.
       destruct H; try discriminate.
       right; apply IH; intuition.
-      destruct H as [[a [q' [H|H]]]|[a [q' [H|H]]]]; try discriminate.
+      destruct H as [[b [q' [H|H]]]|[b [q' [H|H]]]]; try discriminate.
       1,2: right; apply IH.
-      right; right; right; left; exists a, q'; intuition.
-      repeat right; exists a, q'; intuition.
+      right; right; right; left; exists b, q'; intuition.
+      repeat right; exists b, q'; intuition.
   - split; intro H.
     + destruct H.
       subst; intuition.
