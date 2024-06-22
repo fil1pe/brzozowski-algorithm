@@ -392,7 +392,7 @@ Proof.
   destruct H1.
   subst; rewrite H0 in H2; discriminate.
   exists q1; intuition.
-Qed.
+Defined.
 
 
 (* Remove the unreachable states of a NFA *)

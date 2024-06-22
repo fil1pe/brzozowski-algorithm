@@ -45,6 +45,7 @@ Theorem same_language : forall w,
   nfa_accepts State_eq_dec Symbol_eq_dec nfa w <->
   nfa_accepts (Brzozowski.Det_state_eq_dec Det_state_eq_dec) Symbol_eq_dec brzozowski w.
 Proof.
+  unfold brzozowski;
   split; intros.
   - apply mini_rev_language in H.
     remember (mini_rev_dfa State_eq_dec Symbol_eq_dec nfa) as g'.

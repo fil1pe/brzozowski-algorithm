@@ -682,7 +682,7 @@ Proof.
   right; intros [qf [[H1|H1] H2]].
   subst; contradiction.
   apply H; exists qf; intuition.
-Qed.
+Defined.
 
 (* Equivalent states *)
 Definition equiv_states (g:NFA) (q1 q2:State) :=

@@ -88,7 +88,7 @@ Proof.
     right; intro H0; intuition.
   - right; intro H; apply IH; intros y H0;
     intuition.
-Qed.
+Defined.
 
 (* Powerset returns correct subsets *)
 Lemma powerset_correct s1 s2 :
@@ -215,7 +215,7 @@ Proof.
   destruct (subset_dec s1 s2) as [H|H], (subset_dec s2 s1) as [H0|H0].
   intuition.
   1-3: right; intro H1; intuition.
-Qed.
+Defined.
 
 (* Gets the first equivalent state from a list l *)
 Fixpoint get_set (s:ListSet) l :=

@@ -12,7 +12,7 @@ Definition Det_state := ListSet State.
 Lemma Det_state_eq_dec : forall (x1 x2:Det_state), { x1 = x2 } + { x1 <> x2 }.
 Proof.
   apply list_eq_dec, State_eq_dec.
-Qed.
+Defined.
 
 (* Normalize the set states of a NFA *)
 Fixpoint normalize_nfa (g cp:@NFA.NFA Det_state Symbol) :=
