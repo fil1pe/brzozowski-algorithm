@@ -754,4 +754,7 @@ Proof.
   1-3: intuition.
 Qed.
 
+(* Remove duplicate states *)
+Definition states_nodup g := nodup State_eq_dec (states g).
+
 End NFA.

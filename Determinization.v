@@ -15,7 +15,7 @@ Definition det_nfa' (g:NFA) :=
   flat_map (fun a =>
     map (fun s =>
       transition s a (transitionf State_eq_dec Symbol_eq_dec g s a)
-    ) (powerset State (states g))
+    ) (powerset State (states_nodup State_eq_dec g))
   ) (alphabet g).
 
 (* Normalization *)
@@ -47,7 +47,7 @@ Lemma det_nfa'_transitions1 g Q a :
   In (transition Q' a (transitionf State_eq_dec Symbol_eq_dec g Q' a)) (det_nfa' g).
 Proof.
   intros H H0.
-  assert (exists Q', equiv_sets State Q Q' /\ In Q' (powerset State (states g))).
+  assert (exists Q', equiv_sets State Q Q' /\ In Q' (powerset State (states_nodup State_eq_dec g))).
   2: {
     destruct H1 as [Q' [H1 H2]]; clear H.
     exists Q'; split.
@@ -55,7 +55,7 @@ Proof.
     clear H1.
     unfold det_nfa'; right.
     generalize dependent (alphabet g);
-    generalize dependent (powerset State (states g));
+    generalize dependent (powerset State (states_nodup State_eq_dec g));
     intros s H alph H0.
     apply in_flat_map; exists a; split.
     intuition.
@@ -63,7 +63,7 @@ Proof.
     apply in_map_iff; exists Q'; intuition.
   }
   unfold det_nfa' in H; destruct H.
-  - assert (subset State (start_states g) (states g)).
+  - assert (subset State (start_states g) (states_nodup State_eq_dec g)).
     2: {
       apply powerset_complete in H1.
       destruct H1 as [Q' H1].
@@ -71,7 +71,7 @@ Proof.
       1,2: intuition.
     }
     intros q H1.
-    apply start_state.
+    apply nodup_In, start_state.
     intuition.
   - apply powerset_complete.
     intuition.
@@ -93,7 +93,7 @@ Proof.
     apply transitionf_singleton in H1.
     destruct H1 as [q' [_ H1]].
     apply transition_transitionf, transition_states_alphabet in H1.
-    intuition.
+    apply nodup_In; intuition.
 Qed.
 
 (*
@@ -189,7 +189,7 @@ Proof.
   assert (start_states (det_nfa' g) = [start_states g]). {
     unfold det_nfa';
     generalize dependent (alphabet g);
-    generalize dependent (powerset State (states g));
+    generalize dependent (powerset State (states_nodup State_eq_dec g));
     intros s alph; simpl.
     assert (start_states (flat_map (fun a => map (fun s0 => transition s0 a (transitionf State_eq_dec Symbol_eq_dec g s0 a)) s) alph) = []).
     2: rewrite H; intuition.
@@ -245,14 +245,16 @@ Proof.
   destruct H1.
   symmetry in H; subst; revert H0; apply start_state.
   assert (
-    In Q' (powerset State (states g)) \/
+    In Q' (powerset State (states_nodup State_eq_dec g)) \/
     exists Q a, Q' = transitionf State_eq_dec Symbol_eq_dec g Q a
   ).
   2: {
     clear H.
     destruct H1.
-    - generalize dependent Q';
-      induction (states g) as [|q0 s IH];
+    - assert (H1: In q (states_nodup State_eq_dec g)).
+      2: apply nodup_In in H1; auto.
+      generalize dependent Q';
+      induction (states_nodup State_eq_dec g) as [|q0 s IH];
       intros Q' H H0.
       destruct H0; try symmetry in H0; subst; contradiction.
       simpl in H0; apply in_app_or in H0; destruct H0.
@@ -267,7 +269,7 @@ Proof.
   }
   clear H0 Q q.
   generalize dependent (alphabet g).
-  generalize dependent (powerset State (states g)).
+  generalize dependent (powerset State (states_nodup State_eq_dec g)).
   intros s alph H.
   induction alph as [|a alph IH].
   contradiction.
@@ -316,7 +318,7 @@ Proof.
         clear H.
         unfold det_nfa' in H0; destruct H0.
         discriminate.
-        generalize dependent (powerset State (states g));
+        generalize dependent (powerset State (states_nodup State_eq_dec g));
         generalize dependent (alphabet g);
         intros alph s H.
         induction alph as [|a alph IH].
