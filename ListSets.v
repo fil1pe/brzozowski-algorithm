@@ -1,3 +1,5 @@
+Ltac Tauto.intuition_solver ::= auto with *.
+
 Require Export List.
 Include ListNotations.
 

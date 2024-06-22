@@ -34,7 +34,7 @@ Proof.
   induction w1 as [|a w1 IH].
   symmetry; apply app_nil_r.
   simpl.
-  rewrite IH, app_assoc_reverse.
+  rewrite IH, app_assoc.
   intuition.
 Qed.
 
