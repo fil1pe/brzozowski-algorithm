@@ -1,0 +1,8 @@
+.DS_Store
+.vscode
+*.aux
+*.cache
+*.glob
+*.vo
+*.vok
+*.vos
