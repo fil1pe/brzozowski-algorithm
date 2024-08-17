@@ -8,7 +8,7 @@ Definition Word := ListSet Symbol.
 Hypothesis State_eq_dec : forall (x1 x2:State), { x1 = x2 } + { x1 <> x2 }.
 Hypothesis Symbol_eq_dec : forall (x1 x2:Symbol), { x1 = x2 } + { x1 <> x2 }.
 
-Inductive NFA_comp :=
+Variant NFA_comp :=
   | state (q:State)
   | symbol (a:Symbol)
   | start (q:State)
